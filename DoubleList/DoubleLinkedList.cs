@@ -1,4 +1,5 @@
-﻿using Shared;
+﻿using Microsoft.VisualBasic;
+using Shared;
 
 namespace DoubleList;
 
@@ -20,7 +21,7 @@ public class DoubleLinkedList<T> : ILinkedList<T>
 
     public void InsertAtBeginning(T data)
     {
-        var newNode = new Node<T>(data); 
+        var newNode = new Node<T>(data);
         if (_head == null)
         {
             _head = newNode;
@@ -36,12 +37,46 @@ public class DoubleLinkedList<T> : ILinkedList<T>
 
     public void InsertAtEnding(T data)
     {
-        throw new NotImplementedException();
+        var newNode = new Node<T>(data);
+        if (_tail == null)
+        {
+            _head = newNode;
+            _tail = newNode;
+        }
+        else
+        {
+            _tail.Next = newNode;
+            newNode.Previous = _tail;
+            _tail = newNode;
+        }
     }
 
     public void Remove(T data)
     {
-        throw new NotImplementedException();
+        var current = _head;
+        while (current != null)
+        {
+            if (current.Data!.Equals(data))
+            {
+                if (current == _head) // Found at the head
+                {
+                    _head = _head.Next;
+                    _head!.Previous = null;
+                }
+                else if (current == _tail) // Found at the tail
+                {
+                    _tail = _tail.Previous;
+                    _tail!.Next = null;
+                }
+                else // Found in the middle
+                {
+                    current.Previous!.Next = current.Next;
+                    current.Next!.Previous = current.Previous;
+                }
+                return;
+            }
+            current = current.Next;
+        }
     }
 
     public void Reverse()
@@ -62,4 +97,16 @@ public class DoubleLinkedList<T> : ILinkedList<T>
         return result;
     }
 
+    public string ToStringReverse()
+    {
+        var current = _tail;
+        var result = string.Empty;
+        while (current != null)
+        {
+            result += $"{current.Data} -> ";
+            current = current.Previous;
+        }
+        result += "null";
+        return result;
+    }
 }
