@@ -24,6 +24,25 @@ public class SinglyLinkedList<T> : ILinkedList<T>
         return result;
     }
 
+    public string ToStringReverse()
+    {
+        var list = new List<T>();
+        var current = _head;
+        while (current != null)
+        {
+            list.Add(current.Data!);
+            current = current.Next;
+        }
+        list.Reverse();
+        var result = string.Empty;
+        foreach (var item in list)
+        {
+            result += $"{item} -> ";
+        }
+        result += "null";
+        return result;
+    }
+
     public void InsertAtBeginning(T data)
     {
         var newNode = new Node<T>(data);
@@ -81,6 +100,14 @@ public class SinglyLinkedList<T> : ILinkedList<T>
         }
     }
 
+    public void RemoveAll(T data)
+    {
+        while (Contains(data))
+        {
+            Remove(data);
+        }
+    }
+
     public void Reverse()
     {
         Node<T>? previous = null;
@@ -101,6 +128,16 @@ public class SinglyLinkedList<T> : ILinkedList<T>
     }
 
     public void Sort()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SortDescending()
+    {
+        throw new NotImplementedException();
+    }
+
+    public List<T> GetModes()
     {
         throw new NotImplementedException();
     }
