@@ -25,38 +25,6 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
         return false;
     }
 
-    public void InsertAtBeginning(T data)
-    {
-        var newNode = new Node<T>(data);
-        if (_head == null)
-        {
-            _head = newNode;
-            _tail = newNode;
-        }
-        else
-        {
-            newNode.Next = _head;
-            _head.Previous = newNode;
-            _head = newNode;
-        }
-    }
-
-    public void InsertAtEnding(T data)
-    {
-        var newNode = new Node<T>(data);
-        if (_tail == null)
-        {
-            _head = newNode;
-            _tail = newNode;
-        }
-        else
-        {
-            _tail.Next = newNode;
-            newNode.Previous = _tail;
-            _tail = newNode;
-        }
-    }
-
     public void InsertOrdered(T data)
     {
         var newNode = new Node<T>(data);
@@ -69,18 +37,44 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
         }
 
         var current = _head;
-        while (current != null && current.Data!.CompareTo(data) < 0)
+
+        // Si es string, comparar solo por primera letra
+        if (typeof(T) == typeof(string))
         {
-            current = current.Next;
+            string dataStr = (data as string) ?? string.Empty;
+            char firstCharData = dataStr.Length > 0 ? char.ToUpper(dataStr[0]) : char.MinValue;
+
+            while (current != null)
+            {
+                string currentStr = (current.Data as string) ?? string.Empty;
+                char firstCharCurrent = currentStr.Length > 0 ? char.ToUpper(currentStr[0]) : char.MinValue;
+
+                if (firstCharCurrent.CompareTo(firstCharData) < 0)
+                    current = current.Next;
+                else
+                    break;
+            }
+        }
+        else
+        {
+            // Comparación normal para otros tipos
+            while (current != null && current.Data!.CompareTo(data) < 0)
+            {
+                current = current.Next;
+            }
         }
 
         if (current == _head)
         {
-            InsertAtBeginning(data);
+            newNode.Next = _head;
+            _head.Previous = newNode;
+            _head = newNode;
         }
         else if (current == null)
         {
-            InsertAtEnding(data);
+            _tail.Next = newNode;
+            newNode.Previous = _tail;
+            _tail = newNode;
         }
         else
         {
@@ -157,50 +151,58 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
         }
     }
 
-    public void Reverse()
-    {
-        var current = _head;
-        while (current != null)
-        {
-            var temp = current.Next;
-            current.Next = current.Previous;
-            current.Previous = temp;
-            current = temp;
-        }
-
-        var tempNode = _head;
-        _head = _tail;
-        _tail = tempNode;
-    }
-
-    public void Sort()
+    public void SortDescending()
     {
         if (_head == null || _head.Next == null)
             return;
 
-        var sorted = false;
-        while (!sorted)
+        // Si es string, comparar solo por primera letra (descendente)
+        if (typeof(T) == typeof(string))
         {
-            sorted = true;
-            var current = _head;
-            while (current != null && current.Next != null)
+            var sorted = false;
+            while (!sorted)
             {
-                if (current.Data!.CompareTo(current.Next.Data) > 0)
+                sorted = true;
+                var current = _head;
+                while (current != null && current.Next != null)
                 {
-                    var temp = current.Data;
-                    current.Data = current.Next.Data;
-                    current.Next.Data = temp;
-                    sorted = false;
+                    string currentStr = (current.Data as string) ?? string.Empty;
+                    string nextStr = (current.Next.Data as string) ?? string.Empty;
+
+                    char firstCharCurrent = currentStr.Length > 0 ? char.ToUpper(currentStr[0]) : char.MinValue;
+                    char firstCharNext = nextStr.Length > 0 ? char.ToUpper(nextStr[0]) : char.MinValue;
+
+                    if (firstCharCurrent.CompareTo(firstCharNext) < 0)
+                    {
+                        var temp = current.Data;
+                        current.Data = current.Next.Data;
+                        current.Next.Data = temp;
+                        sorted = false;
+                    }
+                    current = current.Next;
                 }
-                current = current.Next;
             }
         }
-    }
-
-    public void SortDescending()
-    {
-        Sort();
-        Reverse();
+        else
+        {
+            var sorted = false;
+            while (!sorted)
+            {
+                sorted = true;
+                var current = _head;
+                while (current != null && current.Next != null)
+                {
+                    if (current.Data!.CompareTo(current.Next.Data) < 0)
+                    {
+                        var temp = current.Data;
+                        current.Data = current.Next.Data;
+                        current.Next.Data = temp;
+                        sorted = false;
+                    }
+                    current = current.Next;
+                }
+            }
+        }
     }
 
     public List<T> GetModes()

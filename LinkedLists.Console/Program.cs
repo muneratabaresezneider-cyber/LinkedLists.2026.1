@@ -1,6 +1,6 @@
 ﻿using DoubleList;
 
-var list = new DoubleLinkedList<int>();
+var list = new DoubleLinkedList<string>();
 var option = string.Empty;
 
 do
@@ -12,7 +12,7 @@ do
     switch (option)
     {
         case "1":
-            AddNumber(list);
+            AddWord(list);
             break;
 
         case "2":
@@ -36,7 +36,7 @@ do
             break;
 
         case "7":
-            SearchNumber(list);
+            SearchWord(list);
             break;
 
         case "8":
@@ -60,38 +60,42 @@ do
 
 void ShowMenu()
 {
-    Console.WriteLine("\n========== LISTA DOBLEMENTE LIGADA ==========\n");
-    Console.WriteLine("1. Adicionar número");
+    Console.WriteLine("\n=============== LISTA DOBLEMENTE LIGADA ================\n");
+    Console.WriteLine("1. Adicionar palabra o caracter");
     Console.WriteLine("2. Mostrar hacia adelante");
     Console.WriteLine("3. Mostrar hacia atrás");
     Console.WriteLine("4. Ordenar descendentemente");
     Console.WriteLine("5. Mostrar la(s) moda(s)");
     Console.WriteLine("6. Mostrar gráfico");
-    Console.WriteLine("7. Existe número");
+    Console.WriteLine("7. Buscar palabra o caracter");
     Console.WriteLine("8. Eliminar una ocurrencia");
     Console.WriteLine("9. Eliminar todas las ocurrencias");
     Console.WriteLine("0. Salir");
-    Console.WriteLine("\n==============================================");
+    Console.WriteLine("\n========================================================");
     Console.Write("\nSeleccione una opción: ");
 }
 
-void AddNumber(DoubleLinkedList<int> list)
+void AddWord(DoubleLinkedList<string> list)
 {
-    Console.Write("Ingrese un número: ");
-    if (int.TryParse(Console.ReadLine(), out int number))
+    Console.Write("Ingrese una palabra o caracter: ");
+    string input = Console.ReadLine() ?? string.Empty;
+
+    if (string.IsNullOrWhiteSpace(input))
     {
-        list.InsertOrdered(number);
-        Console.WriteLine($"Número {number} agregado exitosamente.");
+        Console.WriteLine("Error: Ingrese una palabra o caracter válido.");
     }
     else
     {
-        Console.WriteLine("Error: Ingrese un número válido.");
+        string word = input.Trim();
+        list.InsertOrdered(word);
+        Console.WriteLine($"Palabra o caracter '{word}' agregada exitosamente.");
     }
+
     Console.WriteLine("\nPresione cualquier tecla para continuar...");
     Console.ReadKey();
 }
 
-void ShowForward(DoubleLinkedList<int> list)
+void ShowForward(DoubleLinkedList<string> list)
 {
     Console.WriteLine("\n--- Lista hacia adelante ---");
     if (list.IsEmpty())
@@ -102,7 +106,7 @@ void ShowForward(DoubleLinkedList<int> list)
     Console.ReadKey();
 }
 
-void ShowBackward(DoubleLinkedList<int> list)
+void ShowBackward(DoubleLinkedList<string> list)
 {
     Console.WriteLine("\n--- Lista hacia atrás ---");
     if (list.IsEmpty())
@@ -113,7 +117,7 @@ void ShowBackward(DoubleLinkedList<int> list)
     Console.ReadKey();
 }
 
-void SortDescending(DoubleLinkedList<int> list)
+void SortDescending(DoubleLinkedList<string> list)
 {
     if (list.IsEmpty())
     {
@@ -129,9 +133,9 @@ void SortDescending(DoubleLinkedList<int> list)
     Console.ReadKey();
 }
 
-void ShowModes(DoubleLinkedList<int> list)
+void ShowModes(DoubleLinkedList<string> list)
 {
-    Console.WriteLine("\n--- Moda(s) ---");
+    Console.WriteLine("\n");
     if (list.IsEmpty())
     {
         Console.WriteLine("La lista está vacía.");
@@ -145,24 +149,22 @@ void ShowModes(DoubleLinkedList<int> list)
         }
         else if (modes.Count == 1)
         {
-            Console.WriteLine($"La moda es: {modes[0]}");
+            Console.WriteLine($"La Moda es: '{modes[0]}'");
         }
         else
         {
-            Console.Write("Las modas son: ");
+            Console.WriteLine("Las Modas son:");
             for (int i = 0; i < modes.Count; i++)
             {
-                if (i > 0) Console.Write(", ");
-                Console.Write(modes[i]);
+                Console.WriteLine($"  - {modes[i]}");
             }
-            Console.WriteLine();
         }
     }
     Console.WriteLine("\nPresione cualquier tecla para continuar...");
     Console.ReadKey();
 }
 
-void ShowChart(DoubleLinkedList<int> list)
+void ShowChart(DoubleLinkedList<string> list)
 {
     Console.WriteLine("\n--- Gráfico de ocurrencias ---");
     if (list.IsEmpty())
@@ -177,69 +179,78 @@ void ShowChart(DoubleLinkedList<int> list)
     Console.ReadKey();
 }
 
-void SearchNumber(DoubleLinkedList<int> list)
+void SearchWord(DoubleLinkedList<string> list)
 {
-    Console.Write("Ingrese el número a buscar: ");
-    if (int.TryParse(Console.ReadLine(), out int number))
+    Console.Write("Ingrese la palabra o caracter a buscar: ");
+    string input = Console.ReadLine() ?? string.Empty;
+
+    if (string.IsNullOrWhiteSpace(input))
     {
-        if (list.Contains(number))
-        {
-            Console.WriteLine($"El número {number} existe en la lista.");
-        }
-        else
-        {
-            Console.WriteLine($"El número {number} no existe en la lista.");
-        }
+        Console.WriteLine("Error: Ingrese una palabra o caracter válido.");
     }
     else
     {
-        Console.WriteLine("Error: Ingrese un número válido.");
+        string word = input.Trim();
+        if (list.Contains(word))
+        {
+            Console.WriteLine($"La palabra o caracter '{word}' existe en la lista.");
+        }
+        else
+        {
+            Console.WriteLine($"La palabra o caracter '{word}' no existe en la lista.");
+        }
     }
     Console.WriteLine("\nPresione cualquier tecla para continuar...");
     Console.ReadKey();
 }
 
-void DeleteOneOccurrence(DoubleLinkedList<int> list)
+void DeleteOneOccurrence(DoubleLinkedList<string> list)
 {
-    Console.Write("Ingrese el número a eliminar: ");
-    if (int.TryParse(Console.ReadLine(), out int number))
+    Console.Write("Ingrese la palabra o caracter a eliminar: ");
+    string input = Console.ReadLine() ?? string.Empty;
+
+    if (string.IsNullOrWhiteSpace(input))
     {
-        if (list.Contains(number))
-        {
-            list.Remove(number);
-            Console.WriteLine($"Primera ocurrencia de {number} eliminada.");
-        }
-        else
-        {
-            Console.WriteLine($"El número {number} no existe en la lista.");
-        }
+        Console.WriteLine("Error: Ingrese una palabra o caracter válido.");
     }
     else
     {
-        Console.WriteLine("Error: Ingrese un número válido.");
+        string word = input.Trim();
+        if (list.Contains(word))
+        {
+            list.Remove(word);
+            Console.WriteLine($"Primera ocurrencia de '{word}' eliminada.");
+        }
+        else
+        {
+            Console.WriteLine($"La palabra o caracter '{word}' no existe en la lista.");
+        }
     }
     Console.WriteLine("\nPresione cualquier tecla para continuar...");
     Console.ReadKey();
 }
 
-void DeleteAllOccurrences(DoubleLinkedList<int> list)
+void DeleteAllOccurrences(DoubleLinkedList<string> list)
 {
-    Console.Write("Ingrese el número a eliminar completamente: ");
-    if (int.TryParse(Console.ReadLine(), out int number))
+    Console.Write("Ingrese la palabra o caracter a eliminar completamente: ");
+    string input = Console.ReadLine() ?? string.Empty;
+
+    if (string.IsNullOrWhiteSpace(input))
     {
-        if (list.Contains(number))
-        {
-            list.RemoveAll(number);
-            Console.WriteLine($"Todas las ocurrencias de {number} fueron eliminadas.");
-        }
-        else
-        {
-            Console.WriteLine($"El número {number} no existe en la lista.");
-        }
+        Console.WriteLine("Error: Ingrese una palabra o caracter válido.");
     }
     else
     {
-        Console.WriteLine("Error: Ingrese un número válido.");
+        string word = input.Trim();
+        if (list.Contains(word))
+        {
+            list.RemoveAll(word);
+            Console.WriteLine($"Todas las ocurrencias de '{word}' fueron eliminadas.");
+        }
+        else
+        {
+            Console.WriteLine($"La palabra o caracter '{word}' no existe en la lista.");
+        }
     }
     Console.WriteLine("\nPresione cualquier tecla para continuar...");
     Console.ReadKey();
