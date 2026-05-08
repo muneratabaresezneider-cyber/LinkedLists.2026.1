@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DoubleList\DoubleList.csproj" />
-    <ProjectReference Include="..\SimpleList\SimpleList.csproj" />
   </ItemGroup>
 
 </Project>

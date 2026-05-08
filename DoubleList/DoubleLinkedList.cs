@@ -1,5 +1,4 @@
 ﻿using Shared;
-using System.Collections.Generic;
 
 namespace DoubleList;
 
@@ -216,9 +215,9 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
         while (current != null)
         {
             if (frequencies.ContainsKey(current.Data!))
-                frequencies[current.Data] += 1;
+                frequencies[current.Data!] += 1;
             else
-                frequencies[current.Data] = 1;
+                frequencies[current.Data!] = 1;
             current = current.Next;
         }
 
@@ -251,9 +250,9 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
         while (current != null)
         {
             if (frequencies.ContainsKey(current.Data!))
-                frequencies[current.Data] += 1;
+                frequencies[current.Data!] += 1;
             else
-                frequencies[current.Data] = 1;
+                frequencies[current.Data!] = 1;
             current = current.Next;
         }
 

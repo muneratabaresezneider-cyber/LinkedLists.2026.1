@@ -60,21 +60,19 @@ do
 
 void ShowMenu()
 {
-    Console.WriteLine("╔════════════════════════════════════════╗");
-    Console.WriteLine("║      LISTA DOBLEMENTE LIGADA           ║");
-    Console.WriteLine("╠════════════════════════════════════════╣");
-    Console.WriteLine("║  1. Adicionar número                   ║");
-    Console.WriteLine("║  2. Mostrar hacia adelante             ║");
-    Console.WriteLine("║  3. Mostrar hacia atrás                ║");
-    Console.WriteLine("║  4. Ordenar descendentemente           ║");
-    Console.WriteLine("║  5. Mostrar la(s) moda(s)              ║");
-    Console.WriteLine("║  6. Mostrar gráfico                    ║");
-    Console.WriteLine("║  7. Existe número                      ║");
-    Console.WriteLine("║  8. Eliminar una ocurrencia            ║");
-    Console.WriteLine("║  9. Eliminar todas las ocurrencias     ║");
-    Console.WriteLine("║  0. Salir                              ║");
-    Console.WriteLine("╚════════════════════════════════════════╝");
-    Console.Write("Seleccione una opción: ");
+    Console.WriteLine("\n========== LISTA DOBLEMENTE LIGADA ==========\n");
+    Console.WriteLine("1. Adicionar número");
+    Console.WriteLine("2. Mostrar hacia adelante");
+    Console.WriteLine("3. Mostrar hacia atrás");
+    Console.WriteLine("4. Ordenar descendentemente");
+    Console.WriteLine("5. Mostrar la(s) moda(s)");
+    Console.WriteLine("6. Mostrar gráfico");
+    Console.WriteLine("7. Existe número");
+    Console.WriteLine("8. Eliminar una ocurrencia");
+    Console.WriteLine("9. Eliminar todas las ocurrencias");
+    Console.WriteLine("0. Salir");
+    Console.WriteLine("\n==============================================");
+    Console.Write("\nSeleccione una opción: ");
 }
 
 void AddNumber(DoubleLinkedList<int> list)
@@ -83,11 +81,11 @@ void AddNumber(DoubleLinkedList<int> list)
     if (int.TryParse(Console.ReadLine(), out int number))
     {
         list.InsertOrdered(number);
-        Console.WriteLine($"✓ Número {number} agregado exitosamente.");
+        Console.WriteLine($"Número {number} agregado exitosamente.");
     }
     else
     {
-        Console.WriteLine("✗ Error: Ingrese un número válido.");
+        Console.WriteLine("Error: Ingrese un número válido.");
     }
     Console.WriteLine("\nPresione cualquier tecla para continuar...");
     Console.ReadKey();
@@ -124,7 +122,7 @@ void SortDescending(DoubleLinkedList<int> list)
     else
     {
         list.SortDescending();
-        Console.WriteLine("✓ Lista ordenada descendentemente.");
+        Console.WriteLine("Lista ordenada descendentemente.");
         Console.WriteLine(list.ToString());
     }
     Console.WriteLine("\nPresione cualquier tecla para continuar...");
@@ -186,16 +184,16 @@ void SearchNumber(DoubleLinkedList<int> list)
     {
         if (list.Contains(number))
         {
-            Console.WriteLine($"✓ El número {number} existe en la lista.");
+            Console.WriteLine($"El número {number} existe en la lista.");
         }
         else
         {
-            Console.WriteLine($"✗ El número {number} no existe en la lista.");
+            Console.WriteLine($"El número {number} no existe en la lista.");
         }
     }
     else
     {
-        Console.WriteLine("✗ Error: Ingrese un número válido.");
+        Console.WriteLine("Error: Ingrese un número válido.");
     }
     Console.WriteLine("\nPresione cualquier tecla para continuar...");
     Console.ReadKey();
@@ -209,16 +207,16 @@ void DeleteOneOccurrence(DoubleLinkedList<int> list)
         if (list.Contains(number))
         {
             list.Remove(number);
-            Console.WriteLine($"✓ Primera ocurrencia de {number} eliminada.");
+            Console.WriteLine($"Primera ocurrencia de {number} eliminada.");
         }
         else
         {
-            Console.WriteLine($"✗ El número {number} no existe en la lista.");
+            Console.WriteLine($"El número {number} no existe en la lista.");
         }
     }
     else
     {
-        Console.WriteLine("✗ Error: Ingrese un número válido.");
+        Console.WriteLine("Error: Ingrese un número válido.");
     }
     Console.WriteLine("\nPresione cualquier tecla para continuar...");
     Console.ReadKey();
@@ -232,16 +230,16 @@ void DeleteAllOccurrences(DoubleLinkedList<int> list)
         if (list.Contains(number))
         {
             list.RemoveAll(number);
-            Console.WriteLine($"✓ Todas las ocurrencias de {number} fueron eliminadas.");
+            Console.WriteLine($"Todas las ocurrencias de {number} fueron eliminadas.");
         }
         else
         {
-            Console.WriteLine($"✗ El número {number} no existe en la lista.");
+            Console.WriteLine($"El número {number} no existe en la lista.");
         }
     }
     else
     {
-        Console.WriteLine("✗ Error: Ingrese un número válido.");
+        Console.WriteLine("Error: Ingrese un número válido.");
     }
     Console.WriteLine("\nPresione cualquier tecla para continuar...");
     Console.ReadKey();
