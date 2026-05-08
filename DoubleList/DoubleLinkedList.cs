@@ -156,7 +156,6 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
         if (_head == null || _head.Next == null)
             return;
 
-        // Si es string, comparar solo por primera letra (descendente)
         if (typeof(T) == typeof(string))
         {
             var sorted = false;
